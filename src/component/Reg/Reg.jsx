@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
+// import { createUserWithEmailAndPassword } from 'firebase/auth';
+
+
 const Reg = () => {
     const [showPassword,SetShowPassword]= useState(false)
+
+    const {createUser} = useContext(AuthContext)
+    // console.log(authInfo);
 
     const handelReg = e =>{
         e.preventDefault();
@@ -10,6 +17,15 @@ const Reg = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(name,email,password);
+
+        // create user in firebase
+        createUser(email,password)
+        .then(result=>{
+            console.log(result.us);
+        })
+        .catch(error=>{
+            console.error(error);
+        })
 
     }
     return (

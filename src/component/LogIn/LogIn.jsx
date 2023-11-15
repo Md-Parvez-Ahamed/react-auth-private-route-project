@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const LogIn = () => {
+    const {singInUser}= useContext(AuthContext)
     const [showPassword,SetShowPassword]= useState(false)
 
     const handleLogIn = e => {
@@ -10,6 +12,15 @@ const LogIn = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email,password);
+
+        singInUser(email,password)
+        .then(result=>{
+            console.log(result.user);
+            
+        })
+        .catch(error=>{
+            console.error(error);
+        })
     }
     return (
         <div className="hero min-h-screen bg-base-200">
